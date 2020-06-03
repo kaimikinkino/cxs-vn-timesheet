@@ -1,0 +1,8 @@
+body {
+    min-width: 500px;
+}
+
+#toast-container {
+    top: 0;
+    right: 0;
+}

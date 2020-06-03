@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../css/style.css" rel="stylesheet">
+    <script src="../scripts/jquery-3.2.1.min.js"></script>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: center;
+          padding: 15px;
+        }
+        </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row" style="text-align: center" id="nameEmployee">
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="">
+                <table id="content">
+                </table>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <p id="totalTime"></p>
+        </div>
+        <div class="row">
+            <p id="remainingTime"></p>
+        </div>
+        <div class="row" id="remainingTimeUntilNow">
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12" style="text-align: center">
+            <button id="getTime">Reload</button>
+          </div>
+        </div>
+      </div>
+    <!-- Compiled and minified JavaScript -->
+    <script src="../scripts/popup.js"></script>
+</body>
+
+</html>
