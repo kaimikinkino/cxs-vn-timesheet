@@ -51,7 +51,7 @@ function getData() {
         let timeTotal =
           item.osdHoursPerDay == 0
             ? "--"
-            : (item.osdHoursPerDay - 0.5).toFixed(2);
+            : (item.osdHoursPerDay).toFixed(2);
         totalTimeOfWeek += item.osdHoursPerDay;
 
         tableHtml +=
@@ -85,15 +85,14 @@ function getData() {
       let remainingTimeUntilNow =
         40 -
         totalTimeOfWeek -
-        (new Date().getTime() - lastTimeOut.getTime()) / 1000 / 3600 +
-        i * 0.5;
+        (new Date().getTime() - lastTimeOut.getTime()) / 1000 / 3600;
 
       $("#content").append(tableHtml);
       $("#totalTime").html(
-        "Total Time: " + timeConvert(totalTimeOfWeek - i * 0.5)
+        "Total Time: " + timeConvert(totalTimeOfWeek)
       );
       $("#remainingTime").html(
-        "Remaining Time: " + timeConvert(40 - totalTimeOfWeek + i * 0.5)
+        "Remaining Time: " + timeConvert(40 - totalTimeOfWeek)
       );
       $("#nameEmployee").html(name + " - " + id);
       $("#remainingTimeUntilNow").html(
