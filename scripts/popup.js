@@ -1,15 +1,19 @@
 jQuery(document).ready(function () {
-  generateData();
+  generateData(false);
 
-  document.getElementById("getTime").addEventListener("click", async () => {
-    generateData();
+  document.getElementById("reLoad").addEventListener("click", async () => {
+    generateData(false);
+  });
+
+  document.getElementById("lastWeek").addEventListener("click", async () => {
+    generateData(true);
   });
 });
 
-function getData() {
+function getData(isGetLastWeek) {
   let url =
     "https://portaladmin.orientsoftware.net/api/EmployeeTimeSheet/get?" +
-    buildTimeParam() +
+    buildTimeParam(isGetLastWeek) +
     "&EmployeeID=00004";
 
   $.ajax({
@@ -82,10 +86,11 @@ function getData() {
         }
       });
 
-      let remainingTimeUntilNow =
-        40 -
+      let remainingTimeUntilNow = lastTimeOut != ""
+        ? 40 -
         totalTimeOfWeek -
-        (new Date().getTime() - lastTimeOut.getTime()) / 1000 / 3600;
+        (new Date().getTime() - lastTimeOut.getTime()) / 1000 / 3600
+        : 0;
 
       $("#content").append(tableHtml);
       $("#totalTime").html(
@@ -102,11 +107,11 @@ function getData() {
   });
 }
 
-function generateData() {
+function generateData(isGetLastWeek) {
   $("#content").empty();
   $("#totalTime").empty();
   $("#remainingTime").empty();
-  getData();
+  getData(isGetLastWeek);
 }
 
 function timeConvert(n) {
@@ -121,10 +126,16 @@ function timeConvert(n) {
   return rhours + " hour(s) and " + rminutes + " minute(s).";
 }
 
-function buildTimeParam() {
+function buildTimeParam(isGetLastWeek) {
   var curr = new Date();
   day = curr.getDay();
-  firstday = new Date(curr.getTime() - 60 * 60 * 24 * day * 1000); // will return firstday (i.e. Sunday) of the week
+
+  var mulDate = 1;
+  if(isGetLastWeek){
+    mulDate = 7;
+  }
+
+  firstday = new Date(curr.getTime() - 60 * 60 * 24 * day * 1000 * mulDate); // will return firstday (i.e. Sunday) of the week
   lastday = new Date(firstday.getTime() + 60 * 60 * 24 * 6 * 1000); // adding (60*60*6*24*1000) means adding six days to the firstday which results in lastday (Saturday) of the week
   return "FromDate=" + formatDate(firstday) + "&ToDate=" + formatDate(lastday);
 }
