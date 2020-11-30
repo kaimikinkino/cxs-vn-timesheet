@@ -32,6 +32,7 @@ function getData(isGetLastWeek) {
       let name = "";
       let id = "";
       let lastTimeOut = "";
+      let lastTimeIn = "";
       let i = 0;
       data.forEach((item) => {
         let workingDate = new Date(item.osdWorkingDate).toLocaleDateString(
@@ -81,6 +82,10 @@ function getData(isGetLastWeek) {
           lastTimeOut = new Date(item.osdTimeOut);
         }
 
+        if (item.osdTimeIn != null) {
+          lastTimeIn = new Date(item.osdTimeIn);
+        }
+
         if (item.osdHoursPerDay != 0) {
           i++;
         }
@@ -92,9 +97,18 @@ function getData(isGetLastWeek) {
         (new Date().getTime() - lastTimeOut.getTime()) / 1000 / 3600
         : 0;
 
+      let totalTimeOfDay = lastTimeIn != ""
+      ? (new Date().getTime() - lastTimeIn.getTime()) / 1000 / 3600 - 1
+      : 0;
+
+      console.log(totalTimeOfDay);
+
       $("#content").append(tableHtml);
       $("#totalTime").html(
         "Total Time: " + timeConvert(totalTimeOfWeek)
+      );
+      $("#totalTimeOfDay").html(
+        "Total Time Until Now: " + timeConvert(totalTimeOfDay)
       );
       $("#remainingTime").html(
         "Remaining Time: " + timeConvert(40 - totalTimeOfWeek)
